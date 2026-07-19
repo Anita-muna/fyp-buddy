@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FYP Buddy — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mint:        #3ECFAC;
+      --mint-dark:   #27B593;
+      --mint-light:  #56DDB9;
+      --bg:          #071412;
+      --bg-card:     #0d1f1c;
+      --bg-input:    #0f2420;
+      --border:      rgba(62, 207, 172, 0.18);
+      --border-focus:rgba(62, 207, 172, 0.55);
+      --text:        #e8f5f2;
+      --text-muted:  #7aada0;
+      --text-faint:  #3d6b62;
+      --error:       #ff6b6b;
+      --radius:      14px;
+      --radius-lg:   20px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Ambient background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(62,207,172,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(39,181,147,0.07) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(62,207,172,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(62,207,172,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top nav ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 36px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .brand-logo-fallback {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--bg);
+      font-weight: 600;
+    }
+    .brand-name {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+    .brand-name span { color: var(--mint); }
+
+    .topbar-link {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .topbar-link:hover { color: var(--mint); }
+    .topbar-link strong { color: var(--mint); font-weight: 500; }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Welcome back heading ── */
+    .hero {
+      text-align: center;
+      max-width: 480px;
+      margin-bottom: 36px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .hero-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      display: block;
+      box-shadow: 0 0 0 1px rgba(62,207,172,0.2), 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .hero-avatar-fallback {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      color: var(--bg);
+      margin: 0 auto 20px;
+      box-shadow: 0 0 0 1px rgba(62,207,172,0.2), 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.4px;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--mint);
+    }
+
+    .hero p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Card ── */
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: 0 0 0 1px rgba(62,207,172,0.05), 0 32px 64px rgba(0,0,0,0.35);
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    /* ── Flash messages ── */
+    .flash {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,107,107,0.1);
+      border: 1px solid rgba(255,107,107,0.25);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      color: var(--error);
+      margin-bottom: 18px;
+    }
+    .flash-success {
+      background: rgba(62,207,172,0.1);
+      border-color: rgba(62,207,172,0.25);
+      color: var(--mint);
+    }
+
+    /* ── Form ── */
+    .form-group { margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 11px 14px;
+      color: var(--text);
+      font-size: 14.5px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    input::placeholder { color: var(--text-faint); }
+    input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(62,207,172,0.1);
+    }
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 100px var(--bg-input) inset;
+      -webkit-text-fill-color: var(--text);
+    }
+
+    /* password toggle */
+    .pw-wrap { position: relative; }
+    .pw-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-faint);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .pw-toggle:hover { color: var(--mint); }
+    .pw-wrap input { padding-right: 42px; }
+
+    /* ── Submit ── */
+    .btn-primary {
+      width: 100%;
+      background: var(--mint);
+      border: none;
+      border-radius: var(--radius);
+      padding: 13px 20px;
+      color: #071412;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-top: 4px;
+      letter-spacing: -0.1px;
+    }
+    .btn-primary:hover {
+      background: var(--mint-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(62,207,172,0.3);
+    }
+    .btn-primary:active { transform: translateY(0); box-shadow: none; }
+
+    /* ── Card footer ── */
+    .card-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-faint);
+    }
+    .card-footer a {
+      color: var(--mint);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .card-footer a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .topbar { padding: 18px 20px; }
+      .card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <a href="#" class="brand">
+      <img src="{{ url_for('static', filename='logo.png') }}"
+           alt="FYP Buddy Logo"
+           class="brand-logo"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="brand-logo-fallback" style="display:none;">F</div>
+      <span class="brand-name">FYP <span>Buddy</span></span>
+    </a>
+    <a href="{{ url_for('signup_page') }}" class="topbar-link">
+      New here? <strong>Create an account →</strong>
+    </a>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <img src="{{ url_for('static', filename='logo.png') }}"
+           alt="FYP Buddy"
+           class="hero-avatar"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="hero-avatar-fallback">F</div>
+
+      <h1>Welcome back to<br><em>FYP Buddy</em></h1>
+      <p>Sign in to pick up right where you left off with your project.</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {% if category == 'success' %}flash-success{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('login_page') }}">
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email"
+                 placeholder="you@unizik.edu.ng" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="password" name="password"
+                   placeholder="Your password" required autocomplete="current-password" />
+            <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="Toggle password">
+              <svg id="eye-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Sign in →</button>
+      </form>
+
+      <p class="card-footer">
+        Don't have an account? <a href="{{ url_for('signup_page') }}">Sign up free</a>
+      </p>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  function togglePw() {
+    const input = document.getElementById('password');
+    const icon  = document.getElementById('eye-icon');
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    icon.innerHTML = isText
+      ? `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`
+      : `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+         <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+         <line x1="1" y1="1" x2="23" y2="23"/>`;
+  }
+</script>
+
+</body>
+</html>
