@@ -12,7 +12,9 @@ app = Flask(__name__)
 
 uri = os.environ.get('DATABASE_URL', 'sqlite:///fyp_buddy.db')
 if uri.startswith('postgres://'):
-    uri = uri.replace('postgres://', 'postgresql://', 1)
+    uri = uri.replace('postgres://', 'postgresql+psycopg://', 1)
+elif uri.startswith('postgresql://'):
+    uri = uri.replace('postgresql://', 'postgresql+psycopg://', 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'anita')
 
