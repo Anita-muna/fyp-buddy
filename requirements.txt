@@ -5,3 +5,4 @@ werkzeug
 groq
 psycopg2-binary
 gunicorn
+psycopg[binary]
