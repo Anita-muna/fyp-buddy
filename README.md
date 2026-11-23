@@ -25,7 +25,7 @@ FYP Buddy tracks a student's progress through each project chapter, adapts its g
 | Database | SQLAlchemy ORM with SQLite (local) and PostgreSQL (production) |
 | Authentication | Flask-Login, Werkzeug password hashing |
 | AI | Groq API (LLM) |
-| Deployment | Docker, Render |
+| Deployment | Render |
 | Frontend | HTML, CSS, JavaScript (Jinja2 templates) |
 
 ## How It Works
@@ -61,7 +61,7 @@ python -m venv venv
 source venv/bin/activate        # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install flask flask-sqlalchemy flask-login groq "psycopg[binary]"
+pip install -r requirements.txt
 ```
 
 ### Environment variables
@@ -82,7 +82,7 @@ export SECRET_KEY="a-long-random-string"
 ### Run locally
 
 ```bash
-python app.py
+python main.py
 ```
 
 Then open `http://127.0.0.1:5000`. The database tables are created automatically on first run.
@@ -103,7 +103,7 @@ Then open `http://127.0.0.1:5000`. The database tables are created automatically
 
 ## Deployment
 
-The app is deployed on Render using Docker with a PostgreSQL database. Set the three environment variables above in the Render dashboard. The app converts `postgres://` and `postgresql://` URLs to the `postgresql+psycopg://` format automatically.
+The app is deployed on Render with a PostgreSQL database. Set the three environment variables above in the Render dashboard. The app converts `postgres://` and `postgresql://` URLs to the `postgresql+psycopg://` format automatically.
 
 ## Limitations and Future Improvements
 
